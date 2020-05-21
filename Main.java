@@ -33,6 +33,7 @@ public class Main {
         color1=Color.decode("#E8E6AE");
         color2=Color.decode("#60463B");
         // drawStartMenu();
+        // String[] p={"Player 1","Player 2","Player 3","Player 4"};
         String[] p={"Player 1","Player 2"};
         startGame(p,8,4);
     }
@@ -462,12 +463,14 @@ public class Main {
             for(int i=0,j=n;i<=n && j>=0;i++,j--){
                 //Upper Left
                 playground[i*dimen+j].setIcon(marble1);
-                //Lower Left
-                // playground[(dimen-i)*dimen-(dimen-j)].setBackground(Color.RED);
                 //Lower Right
                 playground[((dimen-i-1)*dimen+(dimen-j-1))].setIcon(marble2);
-                //Upper Right
-                // playground[(i*dimen+(dimen-j-1))].setBackground(Color.RED);
+                if(players.length>2){
+                    //Lower Left
+                    playground[(dimen-i)*dimen-(dimen-j)].setIcon(marble3);
+                    //Upper Right
+                    playground[(i*dimen+(dimen-j-1))].setIcon(marble4);
+                }
             }
         }
     }
