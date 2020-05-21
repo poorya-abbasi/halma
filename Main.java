@@ -22,6 +22,7 @@ public class Main {
     public static boolean didHop=false;
     public static boolean simpleMove=false;
     public static boolean didMove=false;
+    public static JFrame gameFrame;
     //Setting Up Icons
     public static Icon marble1=new ImageIcon("marble1.png");
     public static Icon marble2=new ImageIcon("marble2.png");
@@ -173,6 +174,7 @@ public class Main {
     private static void startGame(String p[],int d,int count){
         players=p;
         JFrame frame=new JFrame();
+        gameFrame=frame;
         frame.setSize(500,500);
         frame.setUndecorated(true);
         dimen=d;
@@ -234,12 +236,59 @@ public class Main {
     private static void nextPlayer(){
         didHop=false;didMove=false;
         clearSelection();
+        if(checkForWinner()>0){
+            drawPlayMenu(gameFrame);
+            return;
+        }
         if(currentPlayerIndex<players.length-1){
             currentPlayerIndex++;
         }else{  
             currentPlayerIndex=0;
         }
         playerTurnLabel.setText(players[currentPlayerIndex]+"'s Turn");
+    }
+
+    private static int checkForWinner(){ 
+        //Filling The Board
+        int count=marbleCount;
+        boolean check1=true,check2=true,check3=true,check4=true;
+        for(int n=0;n<count;n++){
+            for(int i=0,j=n;i<=n && j>=0;i++,j--){
+                //Upper Left
+                if(playground[i*dimen+j].getIcon()!=marble2){
+                    check2=false;
+                }
+                //Lower Right
+                if(playground[((dimen-i-1)*dimen+(dimen-j-1))].getIcon()!=marble1){
+                    check1=false;
+                }
+                if(players.length>2){
+                    //Lower Left
+                    if(playground[(dimen-i)*dimen-(dimen-j)].getIcon()!=marble4){
+                        check3=false;
+                    }
+                    //Upper Right
+                    if(playground[(i*dimen+(dimen-j-1))].getIcon()!=marble3){
+                        check4=false;
+                    }
+                }
+            }
+        }
+        if(check1){
+            JOptionPane.showMessageDialog(null, players[0]+" Won");
+            return 1;
+        }else if(check2){
+            JOptionPane.showMessageDialog(null, players[1]+" Won");
+            return 2;
+        }
+        // else if(check3){
+        //     JOptionPane.showMessageDialog(null, players[2]+" Won");
+        //     return 3;
+        // }else if(check4){
+        //     JOptionPane.showMessageDialog(null, players[3]+" Won");
+        //     return 4;
+        // }
+        return 0;
     }
 
     private static void showControlFrame(JFrame gameFrame){
