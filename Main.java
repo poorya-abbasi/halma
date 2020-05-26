@@ -641,11 +641,36 @@ public class Main {
         }
     }
 
+    private static Image scaleImage(Image image, int w, int h) {
+
+        Image scaled = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+
+        return scaled;
+    }
+
     private static void drawMarbles(final JButton[] playground,final int count,final int dimen){
+        int width = marble1.getIconWidth() / 2;
+        int height = marble1.getIconHeight() / 2;
+        ImageIcon m=new ImageIcon("marble1.png");
+        Image s = scaleImage(m.getImage(), width, height);
+        marble1=new ImageIcon(s);
+
+        m=new ImageIcon("marble2.png");
+        s = scaleImage(m.getImage(), width, height);
+        marble2=new ImageIcon(s);
+
+        m=new ImageIcon("marble3.png");
+        s = scaleImage(m.getImage(), width, height);
+        marble3=new ImageIcon(s);
+
+        m=new ImageIcon("marble4.png");
+        s = scaleImage(m.getImage(), width, height);
+        marble4=new ImageIcon(s);
+
         //Filling The Board
         for(int n=0;n<count;n++){
             for(int i=0,j=n;i<=n && j>=0;i++,j--){
-                //Upper Left
+                //Upper Left 
                 playground[i*dimen+j].setIcon(marble1);
                 //Lower Right
                 playground[((dimen-i-1)*dimen+(dimen-j-1))].setIcon(marble2);
